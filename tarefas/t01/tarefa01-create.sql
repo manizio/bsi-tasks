@@ -1,5 +1,5 @@
 CREATE TABLE funcionario (
-	codigo int,
+	codigo SERIAL,
   	nome varchar(255),
   	sexo varchar(10),
   	dt_nasc date,
@@ -9,7 +9,7 @@ CREATE TABLE funcionario (
 );
 
 CREATE TABLE departamento(
-	codigo int,
+	codigo SERIAL,
   	descricao varchar(255),
   	cod_gerente int,
   
@@ -17,7 +17,7 @@ CREATE TABLE departamento(
 );
 
 CREATE TABLE projeto(
-	codigo int,
+	codigo SERIAL,
   	nome varchar(100),
   	descricao varchar(255),
   	cod_depto int,
@@ -29,7 +29,7 @@ CREATE TABLE projeto(
 );
 
 CREATE TABLE atividade (
-	codigo int,
+	codigo SERIAL,
   	nome varchar(255),
   	descricao varchar(255),
   	cod_responsavel int,
