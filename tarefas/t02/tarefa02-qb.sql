@@ -5,7 +5,7 @@ CREATE OR REPLACE FUNCTION get_average_age()
 	begin
 		RETURN QUERY SELECT d.codigo as id, d.sigla as departamento, AVG(get_age(f.datanasc)) as media
 		from funcionario f, departamento d
-		WHERE f.codigo = d.codigo
+		WHERE f.depto = d.codigo
 		GROUP BY d.codigo
 		ORDER BY d.codigo;
 	end;
