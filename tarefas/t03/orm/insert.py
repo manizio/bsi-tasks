@@ -62,9 +62,9 @@ def populate_departamento(num_rows):
 def populate_projeto(num_rows):
     projetos = []
     fixed_proj = 'Projeto'
-    description = fixed_proj + str(last_character)
     for _ in range(num_rows):
         last_character = fake.random_digit()
+        description = fixed_proj + str(last_character)
         start_date = fake.date_between(start_date='-1y', end_date='today')
         end_date = fake.date_between(start_date=start_date, end_date='+1y')
         conclusion_date = fake.date_between(start_date=start_date, end_date=end_date)
@@ -93,17 +93,27 @@ def populate_projeto(num_rows):
 
 session.commit()
 
-atividades = [
-    Atividade(descricao='Atividade 1', dataInicio=datetime(2023, 1, 1), dataFim=datetime(2023, 1, 10),
-              situacao='Concluída', dataConclusao=datetime(2023, 1, 11)),
-    Atividade(descricao='Atividade 2', dataInicio=datetime(2023, 1, 15), dataFim=datetime(2023, 1, 25),
-              situacao='Concluída', dataConclusao=datetime(2023, 1, 26)),
-    Atividade(descricao='Atividade 3', dataInicio=datetime(2023, 2, 1), dataFim=datetime(2023, 2, 10),
-              situacao='Em andamento', dataConclusao=datetime(2023,3,3))
-]
-
-session.add_all(atividades)
-session.commit()
+def populate_atividade(num_rows):
+    atividades = []
+    fixed_atv="Atividade"
+    for _ in range(num_rows):
+        last_character = fake.random_digit()
+        description = fixed_atv + str(last_character)
+        start_date = fake.date_between(start_date='-1y', end_date='today')
+        end_date = fake.date_between(start_date=start_date, end_date='+1y')
+        conclusion_date = fake.date_between(start_date=start_date, end_date=end_date)
+        status_options = ["Em andamento", "Concluído"]
+        status = fake.random_element(status_options)
+        Atividade(
+            descricao=description,
+            dataInicio=start_date,
+            dataFim=end_date,
+            situacao=status,
+            dataConclusao=conclusion_date
+            )
+        atividades.append(Atividade)
+    session.add_all(atividades)
+    session.commit()
 
 for atividade in session.query(Atividade).all():
     membros = session.query(Funcionario).order_by(Funcionario.codigo).limit(2).all()
