@@ -27,10 +27,14 @@ def populate_funcionario(num_rows):
             dataNasc=dob, 
             salario=salary
         ),
-        
         funcionarios.append(Funcionario)
     session.add_all(funcionarios)
     session.commit()
+    for f in session.query(Funcionario).all():
+        if f.supervisor is None:
+            supervisor = choice(session.query(Funcionario).filter(Funcionario != f).all())
+            f.supervisor = supervisor
+    session.commit
     
 
 def populate_departamento(num_rows):
@@ -44,39 +48,17 @@ def populate_departamento(num_rows):
         Departamento(
             sigla=department,
             descricao=description)
-        
         departamentos.append(Departamento)
     session.add_all(departamentos)
     session.commit()
+    for d in session.query(Departamento).all():
+        if d.gerente is None:
+            f = choice(session.query(Funcionario).all())
+            d.gerente = f
+            d.gerente_id= f.codigo
+    session.commit
 
-funcionarios = session.query(Funcionario).all()
-for i in range(len(funcionarios) - 1):
-    supervisor = choice(funcionarios[:i] + funcionarios[i+1:])
-    funcionarios[i].supervisor = supervisor
 
-ultimo_funcionario = funcionarios[-1]
-funcionario_aleatorio = choice(funcionarios[:-1])
-funcionario_aleatorio.supervisor = ultimo_funcionario
-
-session.commit()
-
-projetos = [
-    Projeto(descricao='Projeto 1', dataInicio=datetime(2023, 1, 1), dataFim=datetime(2023, 12, 31),
-            situacao='Em andamento', dataConclusao=None),
-    Projeto(descricao='Projeto 2', dataInicio=datetime(2023, 2, 1), dataFim=datetime(2023, 11, 30),
-            situacao='Em andamento', dataConclusao=None),
-    Projeto(descricao='Projeto 3', dataInicio=datetime(2023, 3, 1), dataFim=datetime(2023, 10, 31),
-            situacao='Em andamento', dataConclusao=None)
-]
-
-session.add_all(projetos)
-session.commit()
-
-for p in session.query(Projeto).all():
-    departamento = choice(session.query(Departamento).all())
-    responsavel = choice(session.query(Funcionario).all())
-    p.depto = departamento
-    p.responsvel = responsavel
 
 session.commit()
 
