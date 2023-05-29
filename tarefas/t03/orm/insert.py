@@ -59,6 +59,37 @@ def populate_departamento(num_rows):
     session.commit
 
 
+def populate_projeto(num_rows):
+    projetos = []
+    fixed_proj = 'Projeto'
+    description = fixed_proj + str(last_character)
+    for _ in range(num_rows):
+        last_character = fake.random_digit()
+        start_date = fake.date_between(start_date='-1y', end_date='today')
+        end_date = fake.date_between(start_date=start_date, end_date='+1y')
+        conclusion_date = fake.date_between(start_date=start_date, end_date=end_date)
+        status_options = ["Em andamento", "Concluído"]
+        status = fake.random_element(status_options)
+        Projeto(
+            descricao=description,
+            dataInicio=start_date,
+            dataFim= end_date,
+            situacao=status,
+            dataConclusao=conclusion_date
+            )
+        projetos.append(Projeto)
+    session.add_all(projetos)
+    session.commit()
+    for p in session.query(Projeto).all():
+        if p.depto is None:
+            departamento = choice(session.query(Departamento).all())
+            p.depto = departamento
+            p.depto_id= departamento.codigo
+        if p.responsavel is None:        
+            responsavel = choice(session.query(Funcionario).all())
+            p.responsvel = responsavel
+    session.commit()
+
 
 session.commit()
 
