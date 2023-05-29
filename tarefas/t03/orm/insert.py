@@ -33,7 +33,21 @@ def populate_funcionario(num_rows):
     session.commit()
     
 
-
+def populate_departamento(num_rows):
+    departamentos = []
+    fixed_letters = 'DP' 
+    fixed_dp = 'Departamento'
+    for _ in range(num_rows):
+        third_character = fake.random_digit() 
+        department = fixed_letters + str(third_character)
+        description = fixed_dp + str(third_character)
+        Departamento(
+            sigla=department,
+            descricao=description)
+        
+        departamentos.append(Departamento)
+    session.add_all(departamentos)
+    session.commit()
 
 funcionarios = session.query(Funcionario).all()
 for i in range(len(funcionarios) - 1):
