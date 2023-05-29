@@ -4,32 +4,38 @@ from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 from decimal import Decimal
 from random import choice
+from faker import Faker
+
 
 engine = create_engine('postgresql://postgres:postgres@127.0.0.1:8001/tarefa03')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-funcionarios = [
-    Funcionario(nome='João', sexo='M', dataNasc=datetime(1990, 5, 10), salario=Decimal('5000.00')),
-    Funcionario(nome='Maria', sexo='F', dataNasc=datetime(1992, 8, 15), salario=Decimal('4500.00')),
-    Funcionario(nome='Pedro', sexo='M', dataNasc=datetime(1995, 7, 10), salario=Decimal('4000.00')),
-    Funcionario(nome='Ana', sexo='F', dataNasc=datetime(1993, 4, 20), salario=Decimal('5500.00'))
-]
+fake = Faker()
 
-session.add_all(funcionarios)
-session.commit()
+def populate_funcionario(num_rows):
+    funcionarios = []
+    
+    for _ in range(num_rows):
+        name = fake.name()
+        gender=fake.random_element(['M', 'F'])
+        dob = fake.date_of_birth(minimum_age=18, maximum_age=90)
+        salary = fake.pydecimal(left_digits=5, right_digits=2, positive=True)
+        Funcionario(
+            nome=name, 
+            sexo=gender, 
+            dataNasc=dob, 
+            salario=salary
+        ),
+        
+        funcionarios.append(Funcionario)
+    session.add_all(funcionarios)
+    session.commit()
+    
 
-departamentos = [
-    Departamento(sigla='DP1', descricao='Departamento 1'),
-    Departamento(sigla='DP2', descricao='Departamento 2'),
-    Departamento(sigla='DP3', descricao='Departamento 3')
-]
 
-session.add_all(departamentos)
-session.commit()
 
 funcionarios = session.query(Funcionario).all()
-
 for i in range(len(funcionarios) - 1):
     supervisor = choice(funcionarios[:i] + funcionarios[i+1:])
     funcionarios[i].supervisor = supervisor
