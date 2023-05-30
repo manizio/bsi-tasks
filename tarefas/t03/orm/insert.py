@@ -61,6 +61,21 @@ def populate_equipe(num_rows):
             nomeEquipe= name
         )
         )
+        session.commit()
+        
+
+def populate_membro(num_rows):
+    team = choice(session.query(Equipe).all())
+    team_id=  team.codigo
+    f = choice(session.query(Funcionario).all())
+    f_id = f.codigo
+    for i in range(int(num_rows)):
+        session.add(Membro(
+            codEquipe_id= team_id,
+            codFuncionario_id= f_id
+        )
+        )
+        session.commit()
 
 def populate_projeto(num_rows):
     
