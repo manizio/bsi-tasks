@@ -51,7 +51,14 @@ def populate_departamento(num_rows):
             d.gerente = f
             d.gerente_id= f.codigo
             session.commit()
-
+    for f in session.query(Funcionario):
+        if f.depto_id is None:
+            dep= choice(session.query(Departamento).all())
+            d_id= dep.codigo
+            f.depto_id= d_id
+            session.commit()
+   
+            
 def populate_equipe(num_rows):
     fixed_eqp ="Equipe "
     for i in range (int(num_rows)):
