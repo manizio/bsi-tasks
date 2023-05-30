@@ -27,7 +27,7 @@ def populate_funcionario(num_rows):
             salario=salary
         )),
         session.commit()
-    for f in session.query(Funcionario).yield_per(1):
+    for f in session.query(Funcionario):
         if f.supervisor is None:
             supervisor = choice(session.query(Funcionario).filter(Funcionario != f).all())
             f.supervisor_id = supervisor.codigo
@@ -45,12 +45,12 @@ def populate_departamento(num_rows):
             sigla=department,
             descricao=description))
         session.commit()
-    for d in session.query(Departamento).yield_per(1):
+    for d in session.query(Departamento):
         if d.gerente is None:
             f = choice(session.query(Funcionario).all())
             d.gerente = f
             d.gerente_id= f.codigo
-    session.commit()
+            session.commit()
 
 
 def populate_projeto(num_rows):
@@ -72,15 +72,16 @@ def populate_projeto(num_rows):
             dataConclusao=conclusion_date
             ))
         session.commit()
-    for p in session.query(Projeto).yield_per(1):
+    for p in session.query(Projeto):
         if p.depto is None:
             departamento = choice(session.query(Departamento).all())
             p.depto = departamento
             p.depto_id= departamento.codigo
+            session.commit()
         if p.responsavel is None:        
             responsavel = choice(session.query(Funcionario).all())
-            p.responsvel = responsavel
-    session.commit()
+            p.responsavel_id = responsavel.codigo
+            session.commit()
 
 
 session.commit()
