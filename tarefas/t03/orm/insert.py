@@ -119,9 +119,11 @@ def populate_projeto(num_rows):
 session.commit()
 
 def populate_atividade(num_rows):
+    cont = len(session.query(Atividade).all())
     fixed_atv="Atividade"
     for i in range(int(num_rows)):
-        last_character = fake.random_digit()
+        cont+=1
+        last_character = cont
         description = fixed_atv + str(last_character)
         start_date = fake.date_between(start_date='-1y', end_date='today')
         end_date = fake.date_between(start_date=start_date, end_date='+1y')
