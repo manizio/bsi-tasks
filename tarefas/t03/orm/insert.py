@@ -8,7 +8,8 @@ from faker import Faker
 import sys
 
 
-engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa03')
+#engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa03')
+engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa04')
 Session = sessionmaker(bind=engine)
 session = Session()
 
@@ -116,7 +117,10 @@ def populate_projeto(num_rows):
             responsavel = choice(session.query(Funcionario).all())
             p.responsavel_id = responsavel.codigo
             session.commit()
-
+        if p.equipe is None:
+            equipe = choice(session.query(Equipe).all())
+            p.equipe=equipe
+            p.equipe_id= equipe.codigo
 
 session.commit()
 

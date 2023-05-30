@@ -2,7 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import *
 
-engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa03')
+#engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa03')
+engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa04')
 Session = sessionmaker(bind=engine)
 session = Session()
 

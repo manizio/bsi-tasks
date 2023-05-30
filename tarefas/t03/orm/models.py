@@ -2,7 +2,8 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime, Numeric
 from sqlalchemy.orm import relationship, declarative_base
 
 Base = declarative_base()
-engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa03')
+#engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa03')
+engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa04')
 
 class Funcionario(Base):
     __tablename__ = 'funcionario'
