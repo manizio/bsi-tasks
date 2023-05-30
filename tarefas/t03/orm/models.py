@@ -10,6 +10,13 @@ PASSWORD = config('PASSWORD')
 HOST = config('HOST')
 engine = create_engine(f'postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}')
 
+class Log(Base):
+    __tablename__ = 'log'
+    codigo = Column(Integer, primary_key=True, autoincrement=True)
+    log = Column(String, nullable=False)
+    time = Column(Numeric, nullable=False)
+
+
 class Funcionario(Base):
     __tablename__ = 'funcionario'
     codigo = Column(Integer, primary_key=True, autoincrement=True)

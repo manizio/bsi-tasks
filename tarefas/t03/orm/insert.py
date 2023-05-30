@@ -1,21 +1,10 @@
 from models import *
-from sqlalchemy import  create_engine
-from sqlalchemy.orm import sessionmaker
-from datetime import datetime
-from decimal import Decimal
 from random import choice
 from faker import Faker
-from decouple import config
+from connect import connect
 import sys
 
-DATABASE = config('DATABASE')
-PORT = config('PORT')
-USER = config('USER')
-PASSWORD = config('PASSWORD')
-HOST = config('HOST')
-engine = create_engine(f'postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}')
-Session = sessionmaker(bind=engine)
-session = Session()
+session = connect()
 
 fake = Faker()
 
