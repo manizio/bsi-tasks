@@ -145,16 +145,41 @@ def populate_atividadeMembro(num_rows):
                 codAtividade=a_id,
                 codMembro=m_id
             ))
+            session.commit()
         else:
             for am in session.query(AtividadeMembro).all():
                 m_id = choice(session.query(Membro).all()).codigo
                 a_id = choice(session.query(Atividade).all()).codigo
                 if (am.codAtividade != a_id and am.codMembro != m_id):
-                    session.add(AtividadeMembro(
-                        codAtividade=a_id,
-                        codMembro=m_id
-                    ))
-        session.commit()
+                    if(am.codAtividade is None):
+                        session.add(AtividadeMembro(
+                            codAtividade=a_id,
+                            codMembro=m_id
+                        ))
+            session.commit()
+
+
+def populate_atividadeProjeto(num_rows):
+    for i in range (int(num_rows)):
+        p_id = choice(session.query(Projeto).all()).codigo
+        a_id = choice(session.query(Atividade).all()).codigo
+        if not session.query(AtividadeProjeto).all():
+            session.add(AtividadeProjeto(
+                codAtividade=a_id,
+                codProjeto=p_id
+            ))
+        else:
+            for ap in session.query(AtividadeProjeto).all():
+                p_id = choice(session.query(Projeto).all()).codigo
+                a_id = choice(session.query(Atividade).all()).codigo
+                if (ap.codAtividade != a_id and ap.codProjeto != p_id):
+                    if(ap.codAtividade is None):
+                        session.add(AtividadeProjeto(
+                            codAtividade=a_id,
+                            codProjeto=p_id 
+                        ))
+        session.commit()        
+
 
 
 session.close()
@@ -169,5 +194,6 @@ if __name__ == '__main__':
         populate_projeto(argumento)
         populate_atividade(argumento)
         populate_atividadeMembro(argumento)
+        populate_atividadeProjeto(argumento)
     else:
         print("Nenhum argumento fornecido.")
