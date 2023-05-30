@@ -58,7 +58,7 @@ def populate_equipe(num_rows):
         color= fake.color_name()
         name = fixed_eqp + str(color)
         session.add(Equipe(
-            nome= name
+            nomeEquipe= name
         )
         )
 
@@ -121,6 +121,7 @@ if __name__ == '__main__':
         argumento = sys.argv[1]
         populate_funcionario(argumento)
         populate_departamento(argumento)
+        populate_equipe(argumento)
         populate_projeto(argumento)
         populate_atividade(argumento)
     else:
