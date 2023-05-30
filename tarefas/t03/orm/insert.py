@@ -35,10 +35,12 @@ def populate_funcionario(num_rows):
     
 
 def populate_departamento(num_rows):
+    cont = len(session.query(Departamento).all())
     fixed_letters = 'DP' 
     fixed_dp = 'Departamento'
     for i in range( int (num_rows)):
-        third_character = fake.random_digit() 
+        cont+=1
+        third_character = cont 
         department = fixed_letters + str(third_character)
         description = fixed_dp + str(third_character)
         session.add(Departamento (
