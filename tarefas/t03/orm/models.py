@@ -1,9 +1,14 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Numeric, ForeignKey
 from sqlalchemy.orm import relationship, declarative_base
+from decouple import config
 
 Base = declarative_base()
-#engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa03')
-engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa04')
+DATABASE = config('DATABASE')
+PORT = config('PORT')
+USER = config('USER')
+PASSWORD = config('PASSWORD')
+HOST = config('HOST')
+engine = create_engine(f'postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}')
 
 class Funcionario(Base):
     __tablename__ = 'funcionario'

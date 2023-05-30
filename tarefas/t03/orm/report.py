@@ -2,15 +2,19 @@ from datetime import datetime
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
 from models import Funcionario,Projeto, Departamento, Equipe, Membro, Atividade, AtividadeMembro, AtividadeProjeto
+from decouple import config
 
-# Criação da conexão com o banco de dados (substitua as informações de acordo com o seu banco)
-engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa04')
+DATABASE = config('DATABASE')
+PORT = config('PORT')
+USER = config('USER')
+PASSWORD = config('PASSWORD')
+HOST = config('HOST')
+engine = create_engine(f'postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}')
 Session = sessionmaker(bind=engine)
 session = Session()
 
 def relatorio_projetos():
     # Consulta para obter informações dos projetos
-   
 
     # Exibição das informações
     for projeto in session.query(Projeto):

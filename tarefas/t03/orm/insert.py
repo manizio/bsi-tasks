@@ -5,11 +5,15 @@ from datetime import datetime
 from decimal import Decimal
 from random import choice
 from faker import Faker
+from decouple import config
 import sys
 
-
-#engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa03')
-engine = create_engine('postgresql://postgres:postgres@127.0.0.1:5432/tarefa04')
+DATABASE = config('DATABASE')
+PORT = config('PORT')
+USER = config('USER')
+PASSWORD = config('PASSWORD')
+HOST = config('HOST')
+engine = create_engine(f'postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}')
 Session = sessionmaker(bind=engine)
 session = Session()
 
