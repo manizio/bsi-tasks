@@ -52,6 +52,14 @@ def populate_departamento(num_rows):
             d.gerente_id= f.codigo
             session.commit()
 
+def populate_equipe(num_rows):
+    fixed_eqp ="Equipe "
+    for i in range (int(num_rows)):
+        color= fake.color_name()
+        name = fixed_eqp + str(color)
+        session.add(Equipe
+            
+        )
 
 def populate_projeto(num_rows):
     
