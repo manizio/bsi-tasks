@@ -85,10 +85,11 @@ def populate_membro(num_rows):
         session.commit()
 
 def populate_projeto(num_rows):
-    
+    cont = len(session.query(Projeto).all())
     fixed_proj = 'Projeto'
     for i in range(int (num_rows)):
-        last_character = fake.random_digit()
+        cont+=1
+        last_character = cont
         description = fixed_proj + str(last_character)
         start_date = fake.date_between(start_date='-1y', end_date='today')
         end_date = fake.date_between(start_date=start_date, end_date='+1y')
