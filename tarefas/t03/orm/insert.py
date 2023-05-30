@@ -1,5 +1,5 @@
 from models import *
-from sqlalchemy import Null, create_engine
+from sqlalchemy import  create_engine
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 from decimal import Decimal
@@ -27,11 +27,11 @@ def populate_funcionario(num_rows):
             salario=salary
         )),
         session.commit()
-    for f in session.query(Funcionario).all():
-        if f.supervisor is Null:
+    for f in session.query(Funcionario).yield_per(1):
+        if f.supervisor is None:
             supervisor = choice(session.query(Funcionario).filter(Funcionario != f).all())
             f.supervisor_id = supervisor.codigo
-            session.commit
+            session.commit()
     
 
 def populate_departamento(num_rows):
@@ -45,12 +45,12 @@ def populate_departamento(num_rows):
             sigla=department,
             descricao=description))
         session.commit()
-    for d in session.query(Departamento).all():
-        if d.gerente is Null:
+    for d in session.query(Departamento).yield_per(1):
+        if d.gerente is None:
             f = choice(session.query(Funcionario).all())
             d.gerente = f
             d.gerente_id= f.codigo
-    session.commit
+    session.commit()
 
 
 def populate_projeto(num_rows):
@@ -72,12 +72,12 @@ def populate_projeto(num_rows):
             dataConclusao=conclusion_date
             ))
         session.commit()
-    for p in session.query(Projeto).all():
-        if p.depto is Null:
+    for p in session.query(Projeto).yield_per(1):
+        if p.depto is None:
             departamento = choice(session.query(Departamento).all())
             p.depto = departamento
             p.depto_id= departamento.codigo
-        if p.responsavel is Null:        
+        if p.responsavel is None:        
             responsavel = choice(session.query(Funcionario).all())
             p.responsvel = responsavel
     session.commit()
