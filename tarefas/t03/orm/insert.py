@@ -57,8 +57,9 @@ def populate_equipe(num_rows):
     for i in range (int(num_rows)):
         color= fake.color_name()
         name = fixed_eqp + str(color)
-        session.add(Equipe
-            
+        session.add(Equipe(
+            nome= name
+        )
         )
 
 def populate_projeto(num_rows):
