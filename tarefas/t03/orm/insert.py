@@ -136,6 +136,27 @@ def populate_atividade(num_rows):
             ))
         session.commit()
 
+def populate_atividadeMembro(num_rows):
+    for i in range (int(num_rows)):
+        m_id = choice(session.query(Membro).all()).codigo
+        a_id = choice(session.query(Atividade).all()).codigo
+        if not session.query(AtividadeMembro).all():
+            session.add(AtividadeMembro(
+                codAtividade=a_id,
+                codMembro=m_id
+            ))
+        else:
+            for am in session.query(AtividadeMembro).all():
+                m_id = choice(session.query(Membro).all()).codigo
+                a_id = choice(session.query(Atividade).all()).codigo
+                if (am.codAtividade != a_id and am.codMembro != m_id):
+                    session.add(AtividadeMembro(
+                        codAtividade=a_id,
+                        codMembro=m_id
+                    ))
+        session.commit()
+
+
 session.close()
 
 if __name__ == '__main__':
@@ -144,7 +165,9 @@ if __name__ == '__main__':
         populate_funcionario(argumento)
         populate_departamento(argumento)
         populate_equipe(argumento)
+        populate_membro(argumento)
         populate_projeto(argumento)
         populate_atividade(argumento)
+        populate_atividadeMembro(argumento)
     else:
         print("Nenhum argumento fornecido.")
