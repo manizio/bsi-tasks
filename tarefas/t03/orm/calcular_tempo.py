@@ -1,4 +1,5 @@
 from connect import connect
+from report import relatorio_projetos
 from models import *
 
 import time
@@ -26,5 +27,18 @@ def log_time():
         time=calcular_tempo(select_first_thousand)
     ))
     session.commit()
+
+def log_report():
+    logs = session.query(Log).all()
+    num = len(logs)
+
+    session.add(Log(
+        log="Log " + str(num),
+        time=calcular_tempo(relatorio_projetos)
+    ))
+    session.commit()
+    
 if __name__ == '__main__':
     log_time()
+    log_report()
+
