@@ -1,0 +1,1 @@
+ALTER TABLE cassdb.users ADD curso map<text,text>;
